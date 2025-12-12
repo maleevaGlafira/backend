@@ -1,0 +1,55 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Build output
+dist/
+build/
+out/
+.next/
+.nuxt/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# TypeScript
+*.tsbuildinfo
+*.js.map
+*.d.ts.map
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Editors
+.DS_Store
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.sw?
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Misc
+.npm
+.yarn
+
+cert

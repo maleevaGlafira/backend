@@ -1,0 +1,16 @@
+{
+  "Token not provided": "Токен не надано",
+  "Token validation error:": "Помилка перевірки токена:",
+  "Invalid token": "Недійсний токен",
+  "Internal server error": "Внутрішня помилка сервера",
+  "Please provide username and password": "Вкажіть ім'я користувача та пароль",
+  "Invalid user": "Невірний користувач",
+  "Invalid password": "Невірний пароль",
+  "User successfully authorized": "Користувач успішно авторизований",
+  "Authorization error": "Помилка авторизації",
+  "Logout successful": "Вихід успішний",
+  "Hello, this is an Express HTTPS server with TypeScript!": "Привіт, це HTTPS сервер на Express з TypeScript!",
+  "Test error": "Тестова помилка",
+  "Failed to get user list": "Не вдалося отримати список користувачів",
+  "Cache cleared": "Кеш очищено"
+}

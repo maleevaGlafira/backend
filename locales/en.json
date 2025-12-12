@@ -1,0 +1,16 @@
+{
+  "Token not provided": "Token not provided",
+  "Token validation error:": "Token validation error:",
+  "Invalid token": "Invalid token",
+  "Internal server error": "Internal server error",
+  "Please provide username and password": "Please provide username and password",
+  "Invalid user": "Invalid user",
+  "Invalid password": "Invalid password",
+  "User successfully authorized": "User successfully authorized",
+  "Authorization error": "Authorization error",
+  "Logout successful": "Logout successful",
+  "Hello, this is an Express HTTPS server with TypeScript!": "Hello, this is an Express HTTPS server with TypeScript!",
+  "Test error": "Test error 1",
+  "Failed to get user list": "Failed to get user list",
+  "Cache cleared": "Cache cleared"
+}

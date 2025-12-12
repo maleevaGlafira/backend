@@ -1,0 +1,40 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "node dist/app.js",
+    "dev": "nodemon --exec ts-node src/app.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/mssql": "^9.1.8",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "i18n": "^0.15.2",
+    "i18n-node": "^2.1.5",
+    "jsonwebtoken": "^9.0.2",
+    "mssql": "^12.0.0",
+    "node-firebird": "^1.1.9",
+    "winston": "^3.18.3"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.9",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/i18n": "^0.13.12",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.7.2",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
