@@ -24,6 +24,49 @@ export const baseOrdersQuery = `
          o.is_RedLine
   FROM orders o
 `;
+export const baseOrdersQueryPost = `
+    select ID,
+    ORDERNUMBER,
+    DATECOMING,
+    FK_ORDERS_OFFICIALS,
+    DATECLOSED,
+    FK_ORDERS_OFFICIALCLOSED,
+    FK_ORDERS_MESSAGETYPES,
+    ABONENT,
+    FK_ORDERS_DAMAGEPLACE,
+    FK_ORDERS_DAMAGELOCALITY,
+    ISPAYED,
+    LOCATIONDEPTH,
+
+    ISCLOSED,
+    FLOWSPEED,
+    FK_ORDERS_TUBEMATERIAL,
+    FK_ORDERS_DIAMETERS,
+    FK_ORDERS_DAMAGETYPE,
+    FK_ORDERS_REGIONS,
+    FK_ORDERS_STREETS,
+    FK_ORDERS_HOUSETYPES,
+    HOUSENUM,
+    ADDITIONALADDRESS,
+    FK_ORDERS_ORGANISATIONS,
+
+    WITHOUTEQUIPMENT,
+    FK_ORDERS_SOIL,
+    SHIFTNUMBER,
+    SHIFTNUMBERCLOSE,
+    HOODCOUNT,
+    LASTEXCWRKTYPE,
+    ID_ABONENT,
+    IS_PJATIHATKY,
+    FACTDATECOMING,
+    FACTDATECLOSED,
+    FK_ORDERS_ADD_DAMAGELOCALITY,
+    FK_ORDERS_OFF_WITHOUTEXCAV,
+    DATETIME_WITHOUTEXCAV,
+    HEIGHTTHREAD,
+    WIDTHLOT,
+    SPEEDQ,
+    IS_REDLINE from orders o`;
 
 const baseCountQuery = `
     SELECT COUNT(DISTINCT o.id) AS total
@@ -57,10 +100,11 @@ function getEffectiveFilter(
  * Формирует SQL-запрос для выборки нарядов с фильтрами и пагинацией
  */
 export const buildOrdersQuery = (
-  filters: OrderUniSearchFilters
+  filters: OrderUniSearchFilters,
+  baseQuery: string = baseOrdersQuery
 ): QueryWithParams => {
   const effectiveFilters = getEffectiveFilter(filters);
-  console.log(effectiveFilters);
+
   // --- Сортировка ---
   const orderBy = "ORDER BY o.DateComing DESC";
 
@@ -72,12 +116,12 @@ export const buildOrdersQuery = (
   const pagination = `ROWS ${offset + 1} TO ${offset + limit}`;
   const queryParams = buildConditionPartWithParams(effectiveFilters);
   const query = `
-    ${baseOrdersQuery}
+    ${baseQuery}
     WHERE ${queryParams.sql}
     ${orderBy}
     ${pagination}
   `;
-  console.log(queryParams);
+
   const countQuery = `${baseCountQuery} where ${queryParams.sql}`;
   return {
     sql: query,
@@ -95,7 +139,7 @@ const buildConditionPartWithParams = (
 
   if (filters.dateFrom) {
     console.log(filters.dateFrom, parseDateTime(filters.dateFrom));
-    const d = parseDateTime(filters.dateFrom);
+    const d = filters.dateFrom;
     if (d) {
       where.push(`o.DateComing >= ?`);
       params.push(d);
@@ -103,7 +147,7 @@ const buildConditionPartWithParams = (
   }
 
   if (filters.dateTo) {
-    const d = parseDateTime(filters.dateTo);
+    const d = filters.dateTo;
     if (d) {
       where.push(`o.DateComing <= ?`);
       params.push(d);
@@ -111,7 +155,7 @@ const buildConditionPartWithParams = (
   }
 
   if (filters.dateClosedFrom) {
-    const d = parseDateTime(filters.dateClosedFrom);
+    const d = filters.dateClosedFrom;
     if (d) {
       where.push(`o.DateClosed >= ?`);
       params.push(d);
@@ -119,7 +163,7 @@ const buildConditionPartWithParams = (
   }
 
   if (filters.dateClosedTo) {
-    const d = parseDateTime(filters.dateClosedTo);
+    const d = filters.dateClosedTo;
     if (d) {
       where.push(`o.DateClosed <= ?`);
       params.push(d);
@@ -127,8 +171,8 @@ const buildConditionPartWithParams = (
   }
 
   if (filters.orderNumber) {
-    where.push(`o.OrderNumber LIKE ?`);
-    params.push(`%${filters.orderNumber}%`); // драйвер сам экранирует!
+    where.push(`o.OrderNumber = ?`);
+    params.push(`${filters.orderNumber}`); // драйвер сам экранирует!
   }
 
   if (filters.regionIds?.length) {

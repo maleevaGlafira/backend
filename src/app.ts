@@ -14,8 +14,6 @@ import { msSqlDb } from "./db/MsSqlDb";
 import { firebirdDb } from "./db/FirebirdDb"; // Теперь это класс с пулом
 
 import { loadMainCache } from "./services/dictionaries/reference.cache";
-import { LoadVDSCache } from "./services/VDS/dictionaries/vdsReference.cache";
-import { LoadNSCache } from "./services/NS/dictionaries/NsReferences.chache";
 
 import testRoutes from "./routes/testRouter";
 import userRouter from "./routes/userRouter";
@@ -55,19 +53,6 @@ i18n.configure({
 app.use(i18n.init);
 
 // 1. CORS (Cross-Origin Resource Sharing)
-// Важно настроить для взаимодействия Frontend и Backend на разных портах/доменах
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173", // Замените на домен вашего Frontend в production!
-//     credentials: true, // Разрешает передачу куки и заголовков авторизации
-//   })
-// );
-// app.use(
-//   cors({
-//     origin: "http://127.0.0.1:5500", // Замените на домен вашего Frontend в production!
-//     credentials: true, // Разрешает передачу куки и заголовков авторизации
-//   })
-// );
 
 app.use(
   cors({
@@ -135,8 +120,8 @@ const startServer = async () => {
     // Попытка подключиться к MS SQL при старте
     await msSqlDb.getPool(); // Просто пытаемся получить пул, чтобы проверить соединение
     await loadMainCache();
-    await LoadNSCache();
-    await LoadVDSCache();
+    //await LoadNSCache();
+    //await LoadVDSCache();
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
       console.log(`Access frontend at http://localhost:5173`); // Напоминание для Frontend

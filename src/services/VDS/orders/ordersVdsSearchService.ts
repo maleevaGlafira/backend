@@ -5,6 +5,7 @@ import { buildOrdersVDSQueries } from "./ordersVdsQueries";
 import { firebirdDb } from "../../../db/FirebirdDb"; // путь к вашему firebirdDb
 import { DictionaryItem } from "../../../types/dictionaries";
 import { streetItem } from "../../../types/dictionaries";
+import logger from "../../../config/logger";
 import {
   streets,
   regions,
@@ -18,6 +19,7 @@ import {
   vdsDistricts,
   vdsApplicant,
   vdsDamagePlace,
+  vdsDamageType,
 } from "../dictionaries/vdsReference.cache";
 
 export class OrdersVDSSearchService {
@@ -28,6 +30,10 @@ export class OrdersVDSSearchService {
     data: OrderVDSResponse[];
     filter: OrdersFilter;
   }> {
+    logger.info("Search order filter", {
+      filter: filters,
+      compontent: "OrdersVDSSearchService",
+    });
     // Валидация обязательных дат (уже проверяется в parseDateTime, но можно дублировать)
     if (!filters.dateComingFrom) {
       console.log("Throw error");
@@ -36,7 +42,6 @@ export class OrdersVDSSearchService {
 
     const { sql, sqlCount, params } = buildOrdersVDSQueries(filters);
 
-    // Получаем общее количество записей
     const countResult = await this.db.executeSelect<{ TOTAL: number }>(
       sqlCount,
       params
@@ -96,6 +101,7 @@ export class OrdersVDSSearchService {
 
       additionalInfo: null,
       damagePlace: vdsDamagePlace.getItemById(r.FK_ORDER_DMAGEPLACE),
+      damageType: vdsDamageType.getItemById(r.FK_ORDERS_DAMAGETYPE),
     }));
   }
 

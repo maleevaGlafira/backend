@@ -27,6 +27,15 @@ export class DamageLocalityService
     }
     return this.data;
   }
+
+  public getItemById(id: number | null): DamageLocalityItem | null {
+    if (!id) return null;
+    if (this.data.length == 0) {
+      return null;
+    }
+    const item = this.data.find((el) => el.id == id);
+    return item ?? null;
+  }
 }
 
 function mapDamageLocality(row: {

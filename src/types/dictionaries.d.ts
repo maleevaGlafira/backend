@@ -50,3 +50,23 @@ export interface BrigadierItem extends DictionaryItem {
   pr_ns_vds: number | null;
   pr_water_kan: number;
 }
+
+export interface WorkerItem extends DictionaryItem {
+  fk_region: number;
+  pr_ns_vds: number | null;
+  pr_water_kan: number;
+}
+
+export interface ExcavationTypeItem extends DictionaryItem {
+  sequence: number;
+}
+
+export interface DictionaryData<T = any> {
+  [key: string]: T[];
+}
+
+export interface AllDictionariesResponse {
+  common: DictionaryData;
+  vds: DictionaryData;
+  ns: DictionaryData;
+}

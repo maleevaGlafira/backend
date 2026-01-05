@@ -13,6 +13,7 @@ export interface TBaseDictionaryService {
 export interface TDictionaryService<T extends DictionaryItem>
   extends TBaseDictionaryService {
   getData: () => Promise<T[]>;
+  getItemById(id: number | null): T | null;
 }
 
 // export class DictionaryService {

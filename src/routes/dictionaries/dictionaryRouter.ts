@@ -1,8 +1,6 @@
 import { Router } from "express";
 import { DictionariesController } from "../../controllers/dictionaries/dictionariesController";
-
-//  ../controllers/ordersController";
-
+import { AllDictionariesController } from "../../controllers/dictionaries/alldictionaries";
 const router = Router();
 // GET /api/dictionary/regions
 router.get("/regions", DictionariesController.getRegions);
@@ -17,5 +15,8 @@ router.get("/reus", DictionariesController.getReu);
 //GET /api/dictionaries/organisations
 router.get("/organisations", DictionariesController.getOrganisation);
 //GET /api/dictionaries/typeWorks
-router.get("/typeWorks", DictionariesController.getOrganisation);
+router.get("/typeWorks", DictionariesController.getTypeWorks);
+//GET /api/dictionaries/all;
+router.get("/all", AllDictionariesController.getAll);
+
 export default router;

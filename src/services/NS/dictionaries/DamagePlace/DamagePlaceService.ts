@@ -3,7 +3,10 @@
 import { firebirdDb } from "../../../../db/FirebirdDb";
 import { getDamagePlacesQuery } from "../queries";
 import { DamagePlaceItem } from "../../../../types/dictionaries";
-import { TDictionaryService } from "../../../dictionaries/BaseDictionary/BaseDictionaryService";
+import {
+  DictionaryService,
+  TDictionaryService,
+} from "../../../dictionaries/BaseDictionary/BaseDictionaryService";
 
 export class DamagePlaceService implements TDictionaryService<DamagePlaceItem> {
   private db = firebirdDb;
@@ -23,6 +26,15 @@ export class DamagePlaceService implements TDictionaryService<DamagePlaceItem> {
       this.data = items.map((el) => mapDamagePlace(el));
     }
     return this.data;
+  }
+
+  public getItemById(id: number | null): DamagePlaceItem | null {
+    if (!id) return null;
+    if (this.data.length == 0) {
+      return null;
+    }
+    const item = this.data.find((el) => el.id == id);
+    return item ?? null;
   }
 }
 

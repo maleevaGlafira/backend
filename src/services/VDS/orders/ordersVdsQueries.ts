@@ -58,13 +58,24 @@ export function buildWhereClauseAndParams(filters: OrdersFilter): {
   };
 
   // 🔒 Обязательный интервал дат по DATECOMING
-  const from = parseDateTime(filters.dateComingFrom!);
+  const from = filters.dateComingFrom;
 
   conditions.push(`o.DATECOMING >= ?`);
   params.push(from);
+  console.log(from);
   if (filters.dateComingTo) {
-    const to = parseDateTime(filters.dateComingTo!);
+    const to = filters.dateComingTo;
     conditions.push(`o.DATECOMING <= ?`);
+    params.push(to);
+  }
+  if (filters.dateClosedFrom) {
+    const fromCl = filters.dateClosedFrom;
+    conditions.push(`o.DATECLOSED >= ?`);
+    params.push(fromCl);
+  }
+  if (filters.dateClosedTo) {
+    const to = filters.dateClosedTo;
+    conditions.push(`o.DATECLOSED <= ?`);
     params.push(to);
   }
 
@@ -108,6 +119,7 @@ export function buildWhereClauseAndParams(filters: OrdersFilter): {
   addInCondition("FK_ORDERS_BRIGADIERS", filters.brigadierIds);
   addInCondition("FK_ORDERS_OFFICIALS", filters.officialIds);
   addInCondition("FK_ORDERS_OFFICIALCLOSED", filters.officialClosedIds);
+  addInCondition("FK_ORDERS_MESSAGETYPES", filters.messageTypesIds);
 
   // Одиночные ID
   if (filters.diameterId != null) {
@@ -130,7 +142,7 @@ export function buildWhereClauseAndParams(filters: OrdersFilter): {
   }
 
   const where = conditions.length ? " WHERE " + conditions.join(" AND ") : "";
-
+  console.log("searchparatns=", params);
   return { where, params };
 }
 

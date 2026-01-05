@@ -10,8 +10,10 @@ export const parseDateTime = (input: string): Date | null => {
     const iso = `${yyyy}-${String(mm).padStart(2, "0")}-${String(dd).padStart(
       2,
       "0"
-    )}T${String(hh).padStart(2, "0")}:${String(min).padStart(2, "0")}:00`;
+    )}T${String(hh).padStart(2, "0")}:${String(min).padStart(2, "0")}:00Z`;
+    console.log("!!parseDateTime - iso=", iso);
     const date = new Date(iso);
+    console.log("!!parseDateTime - date=", date);
     return isNaN(date.getTime()) ? null : date;
   }
 
@@ -22,7 +24,7 @@ export const parseDateTime = (input: string): Date | null => {
     const [, yyyy, mm, dd, hh = "0", min = "0"] = isoMatch;
     const iso = `${yyyy}-${mm}-${dd}T${String(hh).padStart(2, "0")}:${String(
       min
-    ).padStart(2, "0")}:00`;
+    ).padStart(2, "0")}:00Z`;
     const date = new Date(iso);
     return isNaN(date.getTime()) ? null : date;
   }

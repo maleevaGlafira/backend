@@ -9,6 +9,7 @@ yarn-error.log*
 dist/
 build/
 out/
+cert/
 .next/
 .nuxt/
 
@@ -18,6 +19,7 @@ out/
 .env.development.local
 .env.test.local
 .env.production.local
+.env.examles
 
 # TypeScript
 *.tsbuildinfo

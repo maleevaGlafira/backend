@@ -1,5 +1,7 @@
 import { DictionaryItem } from "../../dictionaries";
 import { TubeDiametersItem } from "../../dictionaries";
+import type { addressBase } from "../../bdTypes";
+
 export interface TableOrderVDS {
   ID: number;
   ORDERNUMBER: number | null;
@@ -55,10 +57,7 @@ export interface OrderVDSResponse {
   messageTypes?: DictionaryItem | null;
   brigadiers?: DictionaryItem | null;
   diameter?: TubeDiametersItem | null;
-  damageType?: {
-    id: number;
-    name: string;
-  } | null;
+  damageType?: DictionaryItem | null;
   regions?: DictionaryItem | null;
   streets?: DictionaryItem | null;
   organisations?: DictionaryItem | null;
@@ -117,7 +116,7 @@ export interface OrdersFilter {
   brigadierIds?: number[] | null; // бригадиры (FK_ORDERS_BRIGADIERS)
   officialIds?: number[] | null; // приняли заявку (FK_ORDERS_OFFICIALS)
   officialClosedIds?: number[] | null; // закрыли наряд (FK_ORDERS_OFFICIALCLOSED)
-
+  messageTypesIds?: number[] | null; // о чем заявлено;
   // Контактная информация
   applicantFio?: string | null; // поиск по подстроке
   applicantPhone?: string | null;
@@ -129,4 +128,11 @@ export interface OrdersFilter {
   // Пагинация
   page?: number; // >= 1
   limit?: number; // например, 10, 25, 50
+}
+
+export interface addressVdsBase extends addressBase {
+  HOUSINGNUM: string | null;
+  APARTMENTNUM: string | null;
+  PORCHNUM: string | null;
+  PORCHKOD: string | null;
 }

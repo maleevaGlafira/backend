@@ -13,3 +13,8 @@ export type QueryWithParams = {
   params: any[];
   newFilter: any;
 };
+
+export interface addressBase {
+  FK_STREETS: number;
+  HOUSENUM: string;
+}

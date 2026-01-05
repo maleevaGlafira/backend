@@ -169,7 +169,7 @@ export class FirebirdDb {
     let connection: PooledConnection | null = null;
     try {
       connection = await this.getConnection();
-      // this.logger.info(`FirebirdDb select query ${query} ${params}`);
+      this.logger.info(`FirebirdDb select query ${query} params = ${params}`);
       const result = await new Promise<T[]>((resolve, reject) => {
         connection!.query(query, params, (err: Error | null, rows: T[]) => {
           if (err) {
@@ -186,6 +186,7 @@ export class FirebirdDb {
             this.logger.info("Firebird SELECT query executed successfully", {
               component: "FirebirdDb",
               selQuery: query,
+              params: params,
             });
           }
           resolve(rows);

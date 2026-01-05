@@ -13,8 +13,18 @@ import {
   reus,
   organisations,
   typeWorks,
+  tubeDiameters,
 } from "../../services/dictionaries/reference.cache";
 import { BaseDictionariesController } from "./baseDictionaryController";
+import {
+  vdsApplicant,
+  vdsDamagePlace,
+  vdsDamageType,
+  vdsDistricts,
+  vdsMessageTypes,
+} from "../../services/VDS/dictionaries/vdsReference.cache";
+import { DamageLocalityService } from "../../services/NS/dictionaries/DamageLocality/DamageLocalityService";
+import { DamagePlaceService } from "../../services/VDS/dictionaries/DamagePlace/DamagePlaceService";
 
 const streetService = new StreetsService();
 

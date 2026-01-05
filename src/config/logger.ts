@@ -54,16 +54,16 @@ const logger = winston.createLogger({
 });
 
 // Если не production, дополнительно выводим в консоль все уровни до debug
-if (process.env.NODE_ENV !== "production") {
-  logger.add(
-    new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple()
-      ),
-      level: "debug", // Позволяет видеть debug-сообщения в разработке
-    })
-  );
-}
+// if (process.env.NODE_ENV !== "production") {
+//   logger.add(
+//     new winston.transports.Console({
+//       format: winston.format.combine(
+//         winston.format.colorize(),
+//         winston.format.simple()
+//       ),
+//       level: "debug", // Позволяет видеть debug-сообщения в разработке
+//     })
+//   );
+// }
 
 export default logger;

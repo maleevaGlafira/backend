@@ -9,20 +9,3 @@ export const vdsDamagePlace = new DamagePlaceService();
 export const vdsDamageType = new DamageTypeService();
 export const vdsMessageTypes = new MessageTypeService();
 export const vdsDistricts = new DistrictsService();
-
-export async function LoadVDSCache() {
-  console.log("load Main");
-  const [
-    vdsApplicantsData,
-    vdsDamagePlacesData,
-    vdsDamageTypesData,
-    vdsMessageTypesData,
-    vdsDistrictsData,
-  ] = await Promise.all([
-    vdsApplicant.getData(),
-    vdsDamagePlace.getData(),
-    vdsDamageType.getData(),
-    vdsMessageTypes.getData(),
-    vdsDistricts.getData(),
-  ]);
-}
