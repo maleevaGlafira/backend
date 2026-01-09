@@ -154,6 +154,11 @@ const buildConditionPartWithParams = (
     params.push(filters.isClosed ? 1 : 0);
   }
 
+  if (filters.isPayed != null) {
+    where.push(`ISPAYED = ?`);
+    params.push(filters.isClosed ? 1 : 0);
+  }
+
   if (filters.dateTo) {
     const d = filters.dateTo;
     if (d) {

@@ -33,16 +33,18 @@ export interface OrderUniSearchFilters {
   houseNum?: string | null;
 
   organizationIds?: number[] | null; // организации (FK_ORDERS_ORGANISATIONS)
-  damageTypeIds?: number[] | null; // типы повреждений (FK_ORDERS_DAMAGETYPE)
+
   damagePlaceIds?: number[] | null; // места повреждения (FK_ORDER_DMAGEPLACE)
   damageLocalityIds?: number[] | null; // местность (для раскопок) (FK_ORDERS_DAMAGELOCALITY)
   addDamageLocalityIds?: number[] | null; /// местность (для раскопок)   FK_ORDERS_ADD_DAMAGELOCALITY;
   messageTypesIds?: number[] | null; // о чем заявлено;
+  isPayed?: boolean | null;
 
   brigadierIds?: number[] | null; // бригадиры (FK_ORDERS_BRIGADIERS)
   officialIds?: number[] | null; // приняли заявку (FK_ORDERS_OFFICIALS)
   officialClosedIds?: number[] | null; // закрыли наряд (FK_ORDERS_OFFICIALCLOSED)
 
+  damageTypeIds?: number[] | null; // типы повреждений (FK_ORDERS_DAMAGETYPE)
   tubeMaterialIds?: number[] | null;
   tubeDiameterIds?: number[] | null;
   LastExwTypeIds?: number[] | null;
