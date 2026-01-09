@@ -24,6 +24,9 @@ import {
   nsDamagePlace,
   nsDamageType,
   nsMessageTypes,
+  nsSoil,
+  nsTubeMaterial,
+  nsExcavationTypes,
 } from "../dictionaries/NsReferences.chache";
 
 function orderMapper(o: Order): Order {
@@ -44,6 +47,7 @@ export class OrdersSearchService {
     logger.info("Get orders ns seaqrch ", {
       compontent: "OrdersSearchService",
     });
+    //logger.info(`tube materials ${await tubeMaterial.getData()}`);
     try {
       const queryParams = forPost
         ? buildOrdersQuery(filters, baseOrdersQueryPost)
@@ -70,12 +74,6 @@ export class OrdersSearchService {
   }
 
   private humanizeOrders(raw: OrderDatabase[]): OrderNsResponse[] {
-    const addresB: addressNsDatabase = {
-      FK_STREETS: raw[0].FK_ORDERS_STREETS,
-      HOUSENUM: raw[0].HOUSENUM,
-      FK_HOUSETYPES: raw[0].FK_ORDERS_HOUSETYPES,
-      ADDITIONALADDRESS: raw[0].ADDITIONALADDRESS,
-    };
     return raw.map((r) => ({
       id: r.ID,
       orderNumber: r.ORDERNUMBER,
@@ -98,15 +96,14 @@ export class OrdersSearchService {
         r.FK_ORDERS_ADD_DAMAGELOCALITY
       ),
 
-      tubeMaterial: null,
+      tubeMaterial: nsTubeMaterial.getItemById(r.FK_ORDERS_TUBEMATERIAL),
       diameter: tubeDiameters.getItemById(r.FK_ORDERS_DIAMETERS),
       damageType: nsDamageType.getItemById(r.FK_ORDERS_DAMAGETYPE),
       organization: organisations.getItemById(r.FK_ORDERS_ORGANISATIONS),
       withoutEquipment: null,
-      soil: null,
+      soil: nsSoil.getItemById(r.FK_ORDERS_SOIL),
 
-      lastExcavationType: null,
-      applicant: null,
+      lastExcavationType: nsExcavationTypes.getItemById(r.LASTEXCWRKTYPE),
       widthLot: r.WIDTHLOT,
       heightLot: r.HEIGHTTHREAD,
       withoutExcavation: r.FK_ORDERS_OFF_WITHOUTEXCAV,

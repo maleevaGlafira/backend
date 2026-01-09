@@ -10,10 +10,7 @@ import { query } from "mssql";
 let regionIds: number[] | undefined;
 
 function rawIds(raw: string | undefined): number[] | undefined {
-  console.log("!!Raw regions is ", raw, typeof raw);
-
   if (raw) {
-    // поддерживаем и CSV формат ("1,2,3"), и одиночное число
     if (Array.isArray(raw)) return raw;
     regionIds = raw
       .split(",")
@@ -37,12 +34,32 @@ export class OrdersController {
       orderNumberRaw != null ? Number(orderNumberRaw) : undefined;
 
     return {
+      orderNumber: isNaN(orderNumber as number) ? 0 : orderNumber,
+      isClosed: source.isClosed,
       dateFrom: source.dateFrom as string | undefined,
       dateTo: source.dateTo as string | undefined,
       dateClosedFrom: source.dateClosedFrom as string | undefined,
       dateClosedTo: source.dateClosedTo as string | undefined,
-      orderNumber: isNaN(orderNumber as number) ? 0 : orderNumber,
+
       regionIds,
+      streetsIds: rawIds(source.streetsIds),
+      houseNum: source.houseNum as string | undefined,
+
+      organizationIds: rawIds(source.organizationIds),
+      damageTypeIds: rawIds(source.damageTypeIds),
+      damagePlaceIds: rawIds(source.damagePlaceIds),
+      damageLocalityIds: rawIds(source.damageLocalityIds),
+      addDamageLocalityIds: rawIds(source.addDamageLocalityIds),
+      messageTypesIds: rawIds(source.messageTypesIds),
+
+      brigadierIds: rawIds(source.brigadierIds),
+      officialIds: rawIds(source.officialIds),
+      officialClosedIds: rawIds(source.officialClosedIds),
+
+      tubeMaterialIds: rawIds(source.tubeMaterialIds),
+      tubeDiameterIds: rawIds(source.tubeDiameterIds),
+      LastExwTypeIds: rawIds(source.LastExwTypeIds),
+
       page: source.page ? Number(source.page) : 1,
       limit: source.limit ? Number(source.limit) : 50,
     };

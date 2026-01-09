@@ -39,6 +39,7 @@ import {
   nsTubeDiameters,
   nsTubeMaterial,
 } from "../NS/dictionaries/NsReferences.chache";
+import { TubeMaterialService } from "../NS/dictionaries/TubeMaterial/TubeMaterialService";
 
 export const regions = new RegionsService();
 export const streets = new StreetsService();
@@ -48,6 +49,7 @@ export const organisations = new OrganisatrionService();
 export const reus = new RegionsService();
 export const typeWorks = new TypeWorkService();
 export const tubeDiameters = new TubeDiametersService();
+export const tubeMaterial = new TubeMaterialService();
 export const workers = new WorkersService();
 
 // export const nsDamageLocality = new DamageLocalityService();

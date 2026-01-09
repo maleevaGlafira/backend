@@ -1,4 +1,5 @@
 // SQL шаблоны — здесь формируем запросы под фильтры
+import logger from "../../../config/logger";
 import { OrderUniSearchFilters } from "../../../types/NS/orders/orderTypes";
 import { parseDateTime } from "../../services/helpfunctions";
 import { QueryWithParams } from "../../services/helpTypes";
@@ -138,12 +139,19 @@ const buildConditionPartWithParams = (
   const where: string[] = ["1=1"];
 
   if (filters.dateFrom) {
-    console.log(filters.dateFrom, parseDateTime(filters.dateFrom));
     const d = filters.dateFrom;
     if (d) {
       where.push(`o.DateComing >= ?`);
       params.push(d);
     }
+  }
+  logger.info(
+    `filter.isClosed=${filters.isClosed} ${filters.isClosed == true ? 1 : 0}`
+  );
+
+  if (filters.isClosed != null) {
+    where.push(`ISCLOSED = ?`);
+    params.push(filters.isClosed ? 1 : 0);
   }
 
   if (filters.dateTo) {
@@ -176,10 +184,88 @@ const buildConditionPartWithParams = (
   }
 
   if (filters.regionIds?.length) {
-    // Для IN с параметрами — нужно по одному placeholder на значение
     const placeholders = filters.regionIds.map(() => "?").join(", ");
     where.push(`o.fk_orders_regions IN (${placeholders})`);
     params.push(...filters.regionIds);
+  }
+
+  if (filters.streetsIds?.length) {
+    const placeholders = filters.streetsIds.map(() => "?").join(", ");
+    where.push(`o.FK_ORDERS_STREETS IN (${placeholders})`);
+    params.push(...filters.streetsIds);
+  }
+
+  if (filters.houseNum && filters.houseNum?.length > 0) {
+    where.push(`(upper(o.HOUSENUM) like ?  and FK_ORDERS_HOUSETYPES=0)`);
+    params.push(`%${filters.houseNum?.trim().toUpperCase()}%`);
+  }
+
+  if (filters.organizationIds?.length) {
+    const placeholders = filters.organizationIds.map(() => "?").join(", ");
+    where.push(`o.FK_ORDERS_ORGANISATIONS IN (${placeholders})`);
+    params.push(...filters.organizationIds);
+  }
+  if (filters.damageTypeIds?.length) {
+    const placeholders = filters.damageTypeIds.map(() => "?").join(", ");
+    where.push(`o.FK_ORDERS_DAMAGETYPE IN (${placeholders})`);
+    params.push(...filters.damageTypeIds);
+  }
+
+  if (filters.damagePlaceIds?.length) {
+    const placeholders = filters.damagePlaceIds.map(() => "?").join(", ");
+    where.push(`o.FK_ORDERS_DAMAGEPLACE IN (${placeholders})`);
+    params.push(...filters.damagePlaceIds);
+  }
+
+  if (filters.damageLocalityIds?.length) {
+    const placeholders = filters.damageLocalityIds.map(() => "?").join(", ");
+    where.push(`o.FK_ORDERS_DAMAGELOCALITY IN (${placeholders})`);
+    params.push(...filters.damageLocalityIds);
+  }
+
+  if (filters.addDamageLocalityIds?.length) {
+    const placeholders = filters.addDamageLocalityIds.map(() => "?").join(", ");
+    where.push(`o.FK_ORDERS_ADD_DAMAGELOCALITY IN (${placeholders})`);
+    params.push(...filters.addDamageLocalityIds);
+  }
+
+  console.log(
+    "filters.messageTypesIds?.length===",
+    filters.messageTypesIds?.length
+  );
+  if (filters.messageTypesIds?.length) {
+    const placeholders = filters.messageTypesIds.map(() => "?").join(", ");
+    where.push(`o.FK_ORDERS_MESSAGETYPES IN (${placeholders})`);
+    params.push(...filters.messageTypesIds);
+  }
+
+  if (filters.officialIds?.length) {
+    const placeholders = filters.officialIds.map(() => "?").join(", ");
+    where.push(`o.FK_ORDERS_OFFICIALS IN (${placeholders})`);
+    params.push(...filters.officialIds);
+  }
+  if (filters.officialClosedIds?.length) {
+    const placeholders = filters.officialClosedIds.map(() => "?").join(", ");
+    where.push(`o.FK_ORDERS_OFFICIALCLOSED IN (${placeholders})`);
+    params.push(...filters.officialClosedIds);
+  }
+
+  if (filters.officialClosedIds?.length) {
+    const placeholders = filters.officialClosedIds.map(() => "?").join(", ");
+    where.push(`o.FK_ORDERS_OFFICIALCLOSED IN (${placeholders})`);
+    params.push(...filters.officialClosedIds);
+  }
+
+  if (filters.tubeDiameterIds?.length) {
+    const placeholders = filters.tubeDiameterIds.map(() => "?").join(", ");
+    where.push(`o.FK_ORDERS_DIAMETERS IN (${placeholders})`);
+    params.push(...filters.tubeDiameterIds);
+  }
+
+  if (filters.tubeMaterialIds?.length) {
+    const placeholders = filters.tubeMaterialIds.map(() => "?").join(", ");
+    where.push(`o.FK_ORDERS_TUBEMATERIAL IN (${placeholders})`);
+    params.push(...filters.tubeMaterialIds);
   }
 
   return <QueryWithParams>{ sql: where.join(" AND "), params };

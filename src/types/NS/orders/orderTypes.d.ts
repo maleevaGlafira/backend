@@ -22,11 +22,31 @@ export interface Order {
 
 export interface OrderUniSearchFilters {
   orderNumber: number | undefined;
+  isClosed: boolean | null;
   dateFrom?: string;
   dateClosedFrom?: string;
   dateTo?: string;
   dateClosedTo?: string;
-  regionIds?: number[];
+
+  regionIds?: number[] | null;
+  streetsIds?: number[] | null;
+  houseNum?: string | null;
+
+  organizationIds?: number[] | null; // организации (FK_ORDERS_ORGANISATIONS)
+  damageTypeIds?: number[] | null; // типы повреждений (FK_ORDERS_DAMAGETYPE)
+  damagePlaceIds?: number[] | null; // места повреждения (FK_ORDER_DMAGEPLACE)
+  damageLocalityIds?: number[] | null; // местность (для раскопок) (FK_ORDERS_DAMAGELOCALITY)
+  addDamageLocalityIds?: number[] | null; /// местность (для раскопок)   FK_ORDERS_ADD_DAMAGELOCALITY;
+  messageTypesIds?: number[] | null; // о чем заявлено;
+
+  brigadierIds?: number[] | null; // бригадиры (FK_ORDERS_BRIGADIERS)
+  officialIds?: number[] | null; // приняли заявку (FK_ORDERS_OFFICIALS)
+  officialClosedIds?: number[] | null; // закрыли наряд (FK_ORDERS_OFFICIALCLOSED)
+
+  tubeMaterialIds?: number[] | null;
+  tubeDiameterIds?: number[] | null;
+  LastExwTypeIds?: number[] | null;
+
   page: number;
   limit: number;
 }
@@ -42,41 +62,41 @@ export interface resultOrderList {
 
 export interface OrderDatabase {
   ID: number;
-  ORDERNUMBER: number;
-  DATECOMING: TDate;
-  FK_ORDERS_OFFICIALS: integer;
-  DATECLOSED: TDate;
-  FK_ORDERS_OFFICIALCLOSED: number;
-  FK_ORDERS_MESSAGETYPES: number;
+  ORDERNUMBER: number; ///+
+  DATECOMING: TDate; //+
+  FK_ORDERS_OFFICIALS: integer; //+-
+  DATECLOSED: TDate; ///+
+  FK_ORDERS_OFFICIALCLOSED: number; //+-
+  FK_ORDERS_MESSAGETYPES: number; //+-
   ABONENT: string;
-  FK_ORDERS_DAMAGEPLACE: number;
-  FK_ORDERS_DAMAGELOCALITY: number;
+  FK_ORDERS_DAMAGEPLACE: number; //+-
+  FK_ORDERS_DAMAGELOCALITY: number; //+-
   ISPAYED: number;
   LOCATIONDEPTH: number;
 
-  ISCLOSED: number;
+  ISCLOSED: number; //+
   FLOWSPEED: number;
   FK_ORDERS_TUBEMATERIAL: number;
   FK_ORDERS_DIAMETERS: number;
-  FK_ORDERS_DAMAGETYPE: number;
-  FK_ORDERS_REGIONS: number;
-  FK_ORDERS_STREETS: number;
+  FK_ORDERS_DAMAGETYPE: number; //+-
+  FK_ORDERS_REGIONS: number; //+
+  FK_ORDERS_STREETS: number; //+-
   FK_ORDERS_HOUSETYPES: number;
-  HOUSENUM: string;
+  HOUSENUM: string; //+-
   ADDITIONALADDRESS: string;
-  FK_ORDERS_ORGANISATIONS: number;
+  FK_ORDERS_ORGANISATIONS: number; //+-
   WITHOUTEQUIPMENT: number;
   FK_ORDERS_SOIL: number;
-  SHIFTNUMBER: number;
-  SHIFTNUMBERCLOSE: number;
+  SHIFTNUMBER: number; //?
+  SHIFTNUMBERCLOSE: number; //?
   HOODCOUNT: number;
-  LASTEXCWRKTYPE: number;
+  LASTEXCWRKTYPE: number; //?
   ID_ABONEN: number;
   IS_PJATIHATKY: number;
   FACTDATECOMING: TDate;
   FACTDATECLOSED: TDate;
-  FK_ORDERS_ADD_DAMAGELOCALITY: number;
-  FK_ORDERS_OFF_WITHOUTEXCAV: number;
+  FK_ORDERS_ADD_DAMAGELOCALITY: number; //+-
+  FK_ORDERS_OFF_WITHOUTEXCAV: number; //?
   DATETIME_WITHOUTEXCAV: TDate;
   HEIGHTTHREAD: number;
   WIDTHLOT: number;
@@ -119,7 +139,6 @@ export interface OrderNsResponse {
   soil?: DictionaryItem | null;
 
   lastExcavationType?: DictionaryItem | null;
-  applicant?: DictionaryItem | null;
   // Адрес
   region?: DictionaryItem | null;
   street?: DictionaryItem | null;

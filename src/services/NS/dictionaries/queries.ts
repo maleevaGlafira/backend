@@ -30,6 +30,6 @@ order by name_ukr`;
 export const getExcavationType = `select id, workname name_ru, workname_ukr name_ukr, sdt."SEQUENCE"  from s_excavationworktypes sdt 
 where sdt.ACTIVITY is null order by workname_ukr`;
 
-export const getMessageTypes = `select id, messagename name_ru, name_ukr from s_messagetypes  where activity is null`;
+export const getMessageTypes = `select id, messagename name_ru, name_ukr from s_messagetypes  where activity is null  and name_ukr <>''  order by name_ukr`;
 
 export const getOfficials = `select id , name name_ru ,name_ukr  from s_officials so where activity is null`;
